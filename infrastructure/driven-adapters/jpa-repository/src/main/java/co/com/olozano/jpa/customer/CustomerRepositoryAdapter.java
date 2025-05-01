@@ -11,8 +11,7 @@ import java.util.UUID;
 @Repository
 public class CustomerRepositoryAdapter extends AdapterOperations<Customer/* change for domain model */, CustomerEntity/* change for adapter model */, UUID, CustomerRepository>
 // implements ModelRepository from domain
-    implements co.com.olozano.model.customer.gateways.CustomerRepository
-{
+        implements co.com.olozano.model.customer.gateways.CustomerRepository {
 
     public CustomerRepositoryAdapter(CustomerRepository repository, ObjectMapper mapper) {
         /**
@@ -21,5 +20,16 @@ public class CustomerRepositoryAdapter extends AdapterOperations<Customer/* chan
          *  Or using mapper.map with the class of the object model
          */
         super(repository, mapper, d -> mapper.map(d, Customer.class/* change for domain model */));
+    }
+
+    @Override
+    public Customer update(Customer customer) {
+        CustomerEntity entity = repository.save(mapper.map(customer, CustomerEntity.class));
+        return mapper.map(entity, Customer.class);
+    }
+
+    @Override
+    public void delete(Customer customer) {
+        repository.save(mapper.map(customer, CustomerEntity.class));
     }
 }

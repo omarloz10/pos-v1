@@ -22,6 +22,8 @@ public class Person {
     private String documentNumber;
     private String numberPhone;
     private String email;
+    private String address;
+    private String gender;
     private LocalDate birthdate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

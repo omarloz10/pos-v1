@@ -21,8 +21,8 @@ public class EmployeeEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @OneToOne
-    @JoinColumn(name = "person_id", nullable = false)
+    @OneToOne(cascade = CascadeType.PERSIST, optional = false)
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
     private PersonEntity person;
 
     @Column(name = "entry_date")
@@ -38,4 +38,10 @@ public class EmployeeEntity {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @PrePersist
+    private void prePersist() {
+        this.entryDate = LocalDate.now();
+        this.deleted = false;
+    }
 }

@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -32,14 +33,20 @@ public class PersonEntity {
     @Column(name = "document_type")
     private String documentType;
 
-    @Column(name = "document_number")
+    @Column(name = "document_number", unique = true)
     private String documentNumber;
 
     @Column(name = "number_phone")
     private String numberPhone;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "gender")
+    private String gender;
 
     @Column(name = "birthdate")
     private LocalDate birthdate;
@@ -51,4 +58,9 @@ public class PersonEntity {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @PrePersist()
+    private void prePersist() {
+        this.age = (int) ChronoUnit.YEARS.between(this.birthdate, LocalDate.now());
+    }
 }

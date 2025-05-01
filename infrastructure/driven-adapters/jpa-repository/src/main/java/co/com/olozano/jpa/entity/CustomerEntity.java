@@ -20,8 +20,8 @@ public class CustomerEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @OneToOne
-    @JoinColumn(name = "person_id", nullable = false)
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, optional = false)
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
     private PersonEntity person;
 
     @Column(name = "deleted")
@@ -34,4 +34,9 @@ public class CustomerEntity {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @PrePersist
+    private void prePersist() {
+        this.deleted = false;
+    }
 }
