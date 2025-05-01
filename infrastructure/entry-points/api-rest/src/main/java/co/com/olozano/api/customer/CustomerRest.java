@@ -3,6 +3,7 @@ package co.com.olozano.api.customer;
 import co.com.olozano.api.dto.CustomerDto;
 import co.com.olozano.api.mapper.CustomerMapper;
 import co.com.olozano.model.customer.Customer;
+import co.com.olozano.model.pagination.PaginationResult;
 import co.com.olozano.usecase.customer.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,16 +33,22 @@ public class CustomerRest {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<CustomerDto>> getAll() {
-        List<CustomerDto> customers = findAllCustomersUseCase.execute()
-                .stream().map(customerMapper::toDTO)
-                .toList();
+    public ResponseEntity<PaginationResult<CustomerDto>> getAllPage(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size) {
 
-        if (customers.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
+        page = page < 0 ? 0 : page;
+        size = size <= 0 ? 10 : size;
 
-        return new ResponseEntity<>(customers, HttpStatus.OK);
+        PaginationResult<Customer> customer = findAllCustomersUseCase.execute(page, size);
+
+        PaginationResult<CustomerDto> customerDto = new PaginationResult<>(
+                customer.getItems().stream().map(customerMapper::toDTO).toList(),
+                customer.getTotalPages(),
+                customer.getTotalElements());
+
+        return new ResponseEntity<>(customerDto, HttpStatus.OK);
+
     }
 
     @PostMapping("/")
