@@ -9,6 +9,7 @@ import org.reactivecommons.utils.ObjectMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class CustomerRepositoryAdapter extends AdapterOperations<Customer/* chan
 
     @Override
     public PaginationResult<Customer> findCustomers(PaginationQuery paginationQuery) {
-        Pageable pageable = PageRequest.of(paginationQuery.getPage(), paginationQuery.getSize());
+        Pageable pageable = PageRequest.of(paginationQuery.getPage(), paginationQuery.getSize(), Sort.by("createdAt").descending());
         Page<CustomerEntity> page = repository.findAll(pageable);
         List<Customer> customers = page.getContent().stream()
                 .map(customer -> mapper.map(customer, Customer.class))

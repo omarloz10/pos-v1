@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -43,9 +42,9 @@ public class CustomerRest {
         PaginationResult<Customer> customer = findAllCustomersUseCase.execute(page, size);
 
         PaginationResult<CustomerDto> customerDto = new PaginationResult<>(
-                customer.getItems().stream().map(customerMapper::toDTO).toList(),
-                customer.getTotalPages(),
-                customer.getTotalElements());
+                customer.data().stream().map(customerMapper::toDTO).toList(),
+                customer.totalPages(),
+                customer.totalElements());
 
         return new ResponseEntity<>(customerDto, HttpStatus.OK);
 

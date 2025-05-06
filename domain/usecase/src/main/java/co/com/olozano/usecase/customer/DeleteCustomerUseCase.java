@@ -19,7 +19,7 @@ public class DeleteCustomerUseCase {
         }
 
         customer = customer.toBuilder()
-                .deleted(true)
+                .deleted(!customer.isDeleted())
                 .build();
 
         customerRepository.delete(customer);
