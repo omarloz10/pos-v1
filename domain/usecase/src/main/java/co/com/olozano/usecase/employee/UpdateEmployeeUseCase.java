@@ -2,6 +2,7 @@ package co.com.olozano.usecase.employee;
 
 import co.com.olozano.model.employee.Employee;
 import co.com.olozano.model.employee.gateways.EmployeeRepository;
+import co.com.olozano.model.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
@@ -16,7 +17,7 @@ public class UpdateEmployeeUseCase {
         Employee employee = employeeRepository.findById(id);
 
         if (employee == null) {
-            throw new RuntimeException("Employee not Found");
+            throw new NotFoundException("Employee with ID [" + id + "] Not Found");
         }
 
         employee = employee.toBuilder()
