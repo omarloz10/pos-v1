@@ -49,18 +49,14 @@ public record CustomerDto(
         @NotNull(message = "The field address is required")
         @NotBlank(message = "The field address is required")
         @NotEmpty(message = "The field address is required")
-        @Email(message = "The field address is invalid")
         String address,
 
         @NotNull(message = "The field gender is required")
         @NotBlank(message = "The field gender is required")
         @NotEmpty(message = "The field gender is required")
-        @Email(message = "The field gender is invalid")
         String gender,
 
         @NotNull(message = "The field birthdate is required")
-        @NotBlank(message = "The field birthdate is required")
-        @NotEmpty(message = "The field birthdate is required")
         LocalDate birthdate,
 
         @JsonProperty(access = JsonProperty.Access.READ_ONLY)

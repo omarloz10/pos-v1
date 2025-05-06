@@ -5,6 +5,7 @@ import co.com.olozano.api.mapper.EmployeeMapper;
 import co.com.olozano.model.employee.Employee;
 import co.com.olozano.model.pagination.PaginationResult;
 import co.com.olozano.usecase.employee.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -47,7 +48,7 @@ public class EmployeeRest {
 
     @PostMapping("/")
     public ResponseEntity<EmployeeDto> create(
-            @RequestBody EmployeeDto employeeDto) {
+            @Valid @RequestBody EmployeeDto employeeDto) {
 
         Employee employee = employeeMapper.toDomain(employeeDto);
         Employee newEmployee = createEmployeeUseCase.execute(employee);
@@ -66,7 +67,7 @@ public class EmployeeRest {
     @PutMapping("/{employeeId}")
     public ResponseEntity<EmployeeDto> update(
             @PathVariable("employeeId") UUID id,
-            @RequestBody EmployeeDto employeeDto
+            @Valid @RequestBody EmployeeDto employeeDto
     ) {
 
         Employee employee = updateEmployeeUseCase.execute(id, employeeMapper.toDomain(employeeDto));

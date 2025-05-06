@@ -5,6 +5,7 @@ import co.com.olozano.api.mapper.CustomerMapper;
 import co.com.olozano.model.customer.Customer;
 import co.com.olozano.model.pagination.PaginationResult;
 import co.com.olozano.usecase.customer.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,11 +26,6 @@ public class CustomerRest {
     private final DeleteCustomerUseCase deleteCustomerUseCase;
 
     private final CustomerMapper customerMapper;
-
-    @GetMapping(path = "/usecase/path")
-    public String commandName() {
-        return "";
-    }
 
     @GetMapping("/")
     public ResponseEntity<PaginationResult<CustomerDto>> getAllPage(
@@ -52,7 +48,7 @@ public class CustomerRest {
 
     @PostMapping("/")
     public ResponseEntity<CustomerDto> create(
-            @RequestBody CustomerDto customerDto) {
+            @Valid @RequestBody CustomerDto customerDto) {
 
         Customer customer = customerMapper.toDomain(customerDto);
         Customer newCustomer = createCustomerUseCase.execute(customer);
@@ -71,7 +67,7 @@ public class CustomerRest {
     @PutMapping("/{customerId}")
     public ResponseEntity<CustomerDto> update(
             @PathVariable("customerId") UUID id,
-            @RequestBody CustomerDto customerDto
+            @Valid @RequestBody CustomerDto customerDto
     ) {
 
         Customer customer = updateCustomerUseCase.execute(id, customerMapper.toDomain(customerDto));
