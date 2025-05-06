@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 @Entity(name = "employees")
@@ -21,9 +22,35 @@ public class EmployeeEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @OneToOne(cascade = CascadeType.PERSIST, optional = false)
-    @JoinColumn(name = "person_id", referencedColumnName = "id")
-    private PersonEntity person;
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "lastname")
+    private String lastname;
+
+    @Column(name = "age")
+    private Integer age;
+
+    @Column(name = "document_type")
+    private String documentType;
+
+    @Column(name = "document_number", unique = true)
+    private String documentNumber;
+
+    @Column(name = "number_phone")
+    private String numberPhone;
+
+    @Column(name = "email", unique = true)
+    private String email;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "gender")
+    private String gender;
+
+    @Column(name = "birthdate")
+    private LocalDate birthdate;
 
     @Column(name = "entry_date")
     private LocalDate entryDate;
@@ -43,5 +70,6 @@ public class EmployeeEntity {
     private void prePersist() {
         this.entryDate = LocalDate.now();
         this.deleted = false;
+        this.age = (int) ChronoUnit.YEARS.between(this.birthdate, LocalDate.now());
     }
 }
