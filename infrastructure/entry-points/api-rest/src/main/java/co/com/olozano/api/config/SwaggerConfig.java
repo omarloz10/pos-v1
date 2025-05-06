@@ -12,12 +12,12 @@ public class SwaggerConfig {
     @Bean
     OpenAPI openApiConfig() {
         return new OpenAPI().info(new Info()
-                        .title("asdasdasd")
-                        .description("asdasdasdasd")
-                        .version("1.0")
-                        .contact(new Contact()
-                                .name("Omar Lozano")));
-//                .addSecurityItem(new SecurityRequirement().addList("bearerAuth")) // Requiere este esquema de seguridad
+                .title("POINT OF SALES")
+                .description("Sistema POS creado para practicar")
+                .version("1.0")
+                .contact(new Contact()
+                        .name("Omar Lozano")));
+//                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
 //                .components(new io.swagger.v3.oas.models.Components()
 //                        .addSecuritySchemes("bearerAuth", new SecurityScheme()
 //                                .name("bearerAuth")
