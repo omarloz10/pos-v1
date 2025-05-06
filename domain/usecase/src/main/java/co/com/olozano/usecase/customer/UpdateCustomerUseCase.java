@@ -21,18 +21,17 @@ public class UpdateCustomerUseCase {
         }
 
         customer = customer.toBuilder()
-                .person(customer.getPerson().toBuilder()
-                        .name(customerData.getPerson().getName())
-                        .lastname(customerData.getPerson().getLastname())
-                        .age((int) ChronoUnit.YEARS.between(customerData.getPerson().getBirthdate(), LocalDate.now()))
-                        .documentType(customerData.getPerson().getDocumentType())
-                        .documentNumber(customerData.getPerson().getDocumentNumber())
-                        .numberPhone(customerData.getPerson().getNumberPhone())
-                        .email(customerData.getPerson().getEmail())
-                        .address(customerData.getPerson().getAddress())
-                        .gender(customerData.getPerson().getGender())
-                        .birthdate(customerData.getPerson().getBirthdate())
-                        .build())
+                .name(customerData.getName())
+                .lastname(customerData.getLastname())
+                .age((int) ChronoUnit.YEARS.between(customerData.getBirthdate(), LocalDate.now()))
+                .documentType(customerData.getDocumentType())
+                .documentNumber(customerData.getDocumentNumber())
+                .numberPhone(customerData.getNumberPhone())
+                .email(customerData.getEmail())
+                .address(customerData.getAddress())
+                .gender(customerData.getGender())
+                .birthdate(customerData.getBirthdate())
+
                 .build();
 
         return customerRepository.update(customer);

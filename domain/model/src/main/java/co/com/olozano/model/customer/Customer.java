@@ -1,8 +1,9 @@
 package co.com.olozano.model.customer;
 
-import co.com.olozano.model.person.Person;
+
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -15,7 +16,16 @@ import java.util.UUID;
 public class Customer {
 
     private UUID id;
-    private Person person;
+    private String name;
+    private String lastname;
+    private Integer age;
+    private String documentType;
+    private String documentNumber;
+    private String numberPhone;
+    private String email;
+    private String address;
+    private String gender;
+    private LocalDate birthdate;
     private boolean deleted;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

@@ -10,8 +10,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public record CustomerDto(
-        UUID customerId,
-        UUID personId,
+        UUID id,
 
         @NotNull(message = "The field name is required")
         @NotBlank(message = "The field name is required")
